@@ -1,0 +1,16 @@
+{
+  "APP_NAME": "Sepet Uygulaması",
+  "About": "Hakkımızda",
+  "Hello world !": "Merhaba Dünya!",
+  "Home": "Ana Sayfa",
+  "Logged in as": "Connecté en tant que",
+  "Login": "Giriş Yap",
+  "Logout": "Çıkış Yap",
+  "Password": "Şifre",
+  "Password is required": "Mot de passe requis",
+  "Username": "Kullanıcı Adı",
+  "Username is required": "Identifiant requis",
+  "Username or password incorrect.": "Identifiant ou mot de passe incorrect.",
+  "Remember me": "Beni Hatırla",
+  "Version": "Version"
+}
