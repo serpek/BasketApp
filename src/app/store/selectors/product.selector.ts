@@ -1,15 +1,11 @@
-import { createSelector } from '@ngrx/store';
+import {createSelector} from '@ngrx/store';
 
-import { IAppState } from '../state/app.state';
-import { IProductState } from '@app/store/state/product.state';
+import {IAppState} from '../state/app.state';
+import {IProductState} from '@app/store/state/product.state';
 
-const selectProducts = (state: IAppState) => state.products;
+const selectAllProduct = (state: IAppState) => state.products;
 
-export const selectProductList = createSelector(
-  selectProducts,
-  (state: IProductState) => state.products
-);
-export const selectSelectedProducts = createSelector(
-  selectProducts,
-  (state: IProductState) => state.selectedProducts
-);
+export const selectProductList =
+  createSelector(selectAllProduct, (state: IProductState) => state.allProducts);
+export const selectSelectedProducts =
+  createSelector(selectAllProduct, (state: IProductState) => state.selectedProducts);

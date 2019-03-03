@@ -1,11 +1,11 @@
 import { IProduct } from '@models/Product';
 
 export interface IProductState {
-  products: IProduct[];
+  allProducts: IProduct[];
   selectedProducts: IProduct;
 }
 
 export const initialProductState: IProductState = {
-  products: null,
+  allProducts: null,
   selectedProducts: null
 };

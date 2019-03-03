@@ -2764,7 +2764,6 @@
     ]
   },
   "Config": {
-    "adminName": "El Maestro Tabarez",
-    "permissions": ["users"]
+    "verison": "1.0.0"
   }
 }

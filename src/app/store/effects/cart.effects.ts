@@ -11,13 +11,6 @@ import { IAppState } from '@app/store/state/app.state';
 
 @Injectable()
 export class CartEffects {
-  @Effect()
-  getCart$ = this.actions$.pipe(
-    ofType<GetCart>(CartActionsTypes.GetCart),
-    map(action => action.payload),
-    withLatestFrom(this.store$.pipe(select(selectCartList))),
-    switchMap(([product, products]) => of(new GetCartSuccess(products)))
-  );
 
   constructor(private shopService: ShopService, private actions$: Actions, private store$: Store<IAppState>) {}
 }

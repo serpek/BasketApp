@@ -4,17 +4,15 @@ import { Store, select } from '@ngrx/store';
 import { of } from 'rxjs';
 import { switchMap, map, withLatestFrom } from 'rxjs/operators';
 
-import { IAppState } from '../state/app.state';
 import {
   ProductActionsTypes,
   GetProduct,
-  GetProducts,
-  GetProductsSuccess,
-  GetProductSuccess
+  GetProductSuccess, GetAllProductSuccess, GetAllProduct
 } from '@app/store/actions/product.actions';
 import { selectProductList } from '@app/store/selectors/product.selector';
 import { ShopService } from '@app/shop/services/shop.service';
 import { IProduct } from '@models/Product';
+import {IAppState} from '@app/store/state/app.state';
 
 @Injectable()
 export class ProductEffects {
@@ -30,10 +28,10 @@ export class ProductEffects {
   );
 
   @Effect()
-  getProducts$ = this.actions$.pipe(
-    ofType<GetProducts>(ProductActionsTypes.GetProducts),
+  getAllProduct$ = this.actions$.pipe(
+    ofType<GetAllProduct>(ProductActionsTypes.GetAllProduct),
     switchMap(() => this.shopService.getProducts()),
-    switchMap((product: IProduct[]) => of(new GetProductsSuccess(product)))
+    switchMap((products: IProduct[]) => of(new GetAllProductSuccess(products)))
   );
 
   constructor(private shopService: ShopService, private actions$: Actions, private store: Store<IAppState>) {}

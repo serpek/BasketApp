@@ -1,11 +1,9 @@
-import { IProduct } from '@models/Product';
+import {ICart} from '@models/Cart';
 
 export interface ICartState {
-  product: IProduct;
-  products: IProduct[];
+  cartItems: ICart[];
 }
 
 export const initialCartState: ICartState = {
-  product: null,
-  products: null
+  cartItems: null
 };

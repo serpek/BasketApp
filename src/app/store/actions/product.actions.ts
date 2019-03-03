@@ -1,11 +1,22 @@
 import { Action } from '@ngrx/store';
+
 import { IProduct } from '@models/Product';
 
 export enum ProductActionsTypes {
   GetProduct = '[Product] Get Product',
   GetProductSuccess = '[Product] Get Product Success',
-  GetProducts = '[Products] Get Products',
-  GetProductsSuccess = '[Products] Get Products Success'
+  GetAllProduct = '[AllProduct] Get All Product',
+  GetAllProductSuccess = '[AllProduct] Get All Product Success'
+}
+
+export class GetAllProduct implements Action {
+  public readonly type = ProductActionsTypes.GetAllProduct;
+}
+
+export class GetAllProductSuccess implements Action {
+  public readonly type = ProductActionsTypes.GetAllProductSuccess;
+
+  constructor(public payload: IProduct[]) {}
 }
 
 export class GetProduct implements Action {
@@ -20,14 +31,5 @@ export class GetProductSuccess implements Action {
   constructor(public payload: IProduct) {}
 }
 
-export class GetProducts implements Action {
-  public readonly type = ProductActionsTypes.GetProducts;
-}
 
-export class GetProductsSuccess implements Action {
-  public readonly type = ProductActionsTypes.GetProductsSuccess;
-
-  constructor(public payload: IProduct[]) {}
-}
-
-export type ProductActions = GetProducts | GetProduct | GetProductsSuccess | GetProductSuccess;
+export type ProductActions = GetAllProduct | GetProduct | GetAllProductSuccess | GetProductSuccess;

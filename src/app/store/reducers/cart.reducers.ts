@@ -1,25 +1,19 @@
-import { CartActions, CartActionsTypes } from '@app/store/actions/cart.actions';
-import { ICartState, initialCartState } from '@app/store/state/cart.state';
+import {CartActions, CartActionsTypes} from '@app/store/actions/cart.actions';
+import {ICartState, initialCartState} from '@app/store/state/cart.state';
 
 export function cartReducers(state: ICartState = initialCartState, action: CartActions): ICartState {
   switch (action.type) {
-    /*case CartActionsTypes.AddItemToCart: {
-      return adapter.upsertOne(action.payload, state);
+    case CartActionsTypes.AddItemToCart: {
+      return {
+        ...state,
+        cartItems: action.payload
+      };
     }
     case CartActionsTypes.RemoveItemFromCart: {
-      return adapter.removeOne(action.payload, state);
-    }*/
-    case CartActionsTypes.GetCartSuccess: {
-      return {
-        ...state,
-        products: action.payload
-      };
+      return {...state, cartItems: action.payload};
     }
-    case CartActionsTypes.SetCartSuccess: {
-      return {
-        ...state,
-        product: action.payload
-      };
+    case CartActionsTypes.GetCartSuccess: {
+      return {...state, cartItems: action.payload};
     }
 
     default:

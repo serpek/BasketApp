@@ -3,10 +3,10 @@ import { ProductActions, ProductActionsTypes } from '@app/store/actions/product.
 
 export function productReducers(state: IProductState = initialProductState, action: ProductActions): IProductState {
   switch (action.type) {
-    case ProductActionsTypes.GetProductsSuccess: {
+    case ProductActionsTypes.GetAllProductSuccess: {
       return {
         ...state,
-        products: action.payload
+        allProducts: action.payload
       };
     }
     case ProductActionsTypes.GetProductSuccess: {

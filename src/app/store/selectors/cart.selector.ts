@@ -7,5 +7,5 @@ const selectCart = (state: IAppState) => state.cart;
 
 export const selectCartList = createSelector(
   selectCart,
-  (state: ICartState) => state.products
+  (state: ICartState) => state.cartItems
 );

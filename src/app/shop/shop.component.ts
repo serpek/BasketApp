@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { IAppState } from '@app/store/state/app.state';
 import { select, Store } from '@ngrx/store';
 import { selectProductList } from '@app/store/selectors/product.selector';
-import { GetProducts } from '@app/store/actions/product.actions';
+import {GetAllProduct} from '@app/store/actions/product.actions';
 
 @Component({
   selector: 'app-shop',
@@ -18,7 +18,7 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this._store.dispatch(new GetProducts());
+    this._store.dispatch(new GetAllProduct());
     this.isLoading = false;
   }
 }
