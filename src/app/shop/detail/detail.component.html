@@ -1,26 +1,10 @@
-<div class="container" *ngIf="(product$ | async) as product">
+<div class="container">
   <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <img [src]="product.ProductPicUrl" class="card-img" alt="..." />
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{ product.Name }}</h5>
-              <p class="card-text">{{ product.Description }}</p>
-              <p class="card-text">
-                <small class="text-muted">Fiyatı : {{ product.Price }} {{ product.CurrencyCode }}</small>
-              </p>
-              <div class="btn-group" role="group" aria-label="Card Actions">
-                <button type="button" class="btn btn-primary" (click)="saveCartProduct(product)">Sepete Ekle</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <app-product
+      class="col-md-12 mb-3"
+      *ngIf="product"
+      [product]="product"
+      (addToCart)="cartService.addToBasket(product.ProductId, 1)"
+    ></app-product>
   </div>
 </div>

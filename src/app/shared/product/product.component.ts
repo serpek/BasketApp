@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IProduct } from '@models/Product';
+import { Product } from '@models/Product';
+import { CartItem } from '@models/Cart';
 
 @Component({
   selector: 'app-product',
@@ -9,10 +10,11 @@ import { IProduct } from '@models/Product';
 })
 export class ProductComponent implements OnInit {
   @Input()
-  product: IProduct;
+  product: Product;
 
   @Output()
-  addToCart: EventEmitter<IProduct> = new EventEmitter<IProduct>();
+  addToCart: EventEmitter<CartItem> = new EventEmitter<CartItem>();
+
   @Output()
   goToDetail: EventEmitter<string> = new EventEmitter<string>();
 

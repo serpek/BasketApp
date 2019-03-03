@@ -1,8 +1,7 @@
-import { IProduct } from '@models/Product';
+import { Product } from '@models/Product';
 
 export interface CartSummary {
-  product: IProduct;
-  finalPrice?: number;
+  product: Product;
   quantity: number;
   totalPrice: number;
 }

@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {IAppState} from '@app/store/state/app.state';
-import {select, Store} from '@ngrx/store';
-import {GetProduct} from '@app/store/actions/product.actions';
-import {ActivatedRoute, Router} from '@angular/router';
-import {selectSelectedProducts} from '@app/store/selectors/product.selector';
-import {IProduct} from '@models/Product';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IProduct, Product } from '@models/Product';
+import { finalize } from 'rxjs/operators';
+import { ShopService } from '@app/shop/services/shop.service';
+import { CartService } from '@app/shop/services/cart.service';
 
 @Component({
   selector: 'app-detail',
@@ -12,19 +11,31 @@ import {IProduct} from '@models/Product';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  product$ = this._store.pipe(select(selectSelectedProducts));
+  productId: string;
+  isLoading: boolean;
+  product: Product;
 
-  constructor(private _store: Store<IAppState>, private activatedRouter: ActivatedRoute, private router: Router) {
+  constructor(
+    private cartService: CartService,
+    private shopService: ShopService,
+    private activatedRouter: ActivatedRoute
+  ) {
+    this.productId = this.activatedRouter.snapshot.params.id;
   }
 
   ngOnInit() {
-    this._store.dispatch(new GetProduct(this.activatedRouter.snapshot.params.id));
+    this.isLoading = true;
+    this.shopService
+      .getProduct(this.productId)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe((product: Product) => {
+        this.product = product;
+      });
   }
 
-  goToProduct(productID: string) {
-    this.router.navigate(['/shop/detail', productID]);
-  }
-
-  saveCartProduct(product: IProduct) {
-  }
+  addToCart(product: IProduct) {}
 }

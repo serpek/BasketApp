@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,15 +13,10 @@ import { ShellModule } from './shell/shell.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { StoreModule } from '@ngrx/store';
-import { appReducers } from '@app/store/reducers/app.reducers';
-import { EffectsModule } from '@ngrx/effects';
-import { ProductEffects } from '@app/store/effects/product.effects';
-import { ConfigEffects } from '@app/store/effects/config.effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '@env/environment';
-import { CartEffects } from '@app/store/effects/cart.effects';
+import { ConfigService } from '@app/core/config.service';
+import { CartService } from '@app/shop/services/cart.service';
+
+export let InjectorInstance: Injector;
 
 @NgModule({
   imports: [
@@ -29,10 +24,6 @@ import { CartEffects } from '@app/store/effects/cart.effects';
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
-    StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([ProductEffects, CartEffects, ConfigEffects]),
-    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
     FontAwesomeModule,
     NgbModule,
     CoreModule,
@@ -43,7 +34,20 @@ import { CartEffects } from '@app/store/effects/cart.effects';
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
-  providers: [],
+  providers: [
+    ConfigService,
+    CartService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (config: ConfigService) => () => config.load(),
+      deps: [ConfigService],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private injector: Injector) {
+    InjectorInstance = this.injector;
+  }
+}

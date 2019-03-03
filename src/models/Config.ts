@@ -1,3 +1,3 @@
 export interface IConfig {
-  version: string;
+  version?: string;
 }

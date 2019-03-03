@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { merge } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService } from '@app/core';
+import { ConfigService } from '@app/core/config.service';
 
 const log = new Logger('App');
 
@@ -15,8 +16,12 @@ const log = new Logger('App');
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+  config: any;
+  private subscription = new Subscription();
+
   constructor(
+    private configService: ConfigService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private titleService: Title,
@@ -31,6 +36,12 @@ export class AppComponent implements OnInit {
     }
 
     log.debug('init');
+
+    this.subscription.add(
+      this.configService.ConfigReady.subscribe(config => {
+        this.config = config;
+      })
+    );
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
@@ -56,5 +67,10 @@ export class AppComponent implements OnInit {
           this.titleService.setTitle(this.translateService.instant(title));
         }
       });
+  }
+
+  ngOnDestroy() {
+    log.info('AppComponent ngOnDestroy');
+    this.subscription.unsubscribe();
   }
 }

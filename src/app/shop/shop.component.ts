@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-import { IAppState } from '@app/store/state/app.state';
-import { select, Store } from '@ngrx/store';
-import { selectProductList } from '@app/store/selectors/product.selector';
-import {GetAllProduct} from '@app/store/actions/product.actions';
+import { Product } from '@models/Product';
+import { finalize } from 'rxjs/operators';
+import { ShopService } from '@app/shop/services/shop.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
@@ -12,13 +11,21 @@ import {GetAllProduct} from '@app/store/actions/product.actions';
 })
 export class ShopComponent implements OnInit {
   isLoading: boolean;
-  products$ = this._store.pipe(select(selectProductList));
+  products: Product[];
 
-  constructor(private _store: Store<IAppState>) {}
+  constructor(private shopService: ShopService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this._store.dispatch(new GetAllProduct());
-    this.isLoading = false;
+    this.shopService
+      .getProducts()
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe((products: Product[]) => {
+        this.products = products;
+      });
   }
 }

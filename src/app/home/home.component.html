@@ -1,10 +1,13 @@
 <app-loader [isLoading]="isLoading"></app-loader>
+
 <div class="container" [hidden]="isLoading">
-  <div class="row">
+  <div class="row align-items-stretch">
     <app-product
+      class="col-md-6 mb-3"
       *ngFor="let product of products"
       [product]="product"
-      (addToCart)="addToCart.emit($event)"
+      (addToCart)="cartService.addToBasket(product.ProductId, 1)"
+      (goToDetail)="goToProduct(product.ProductId)"
     ></app-product>
   </div>
 </div>

@@ -1,36 +1,51 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {AuthenticationService, I18nService} from '@app/core';
-import {select, Store} from '@ngrx/store';
-import {selectConfig} from '@app/store/selectors/config.selector';
-import {IAppState} from '@app/store/state/app.state';
-import {GetConfig} from '@app/store/actions/config.actions';
-import {IConfig} from '@models/Config';
-import {selectCartList} from '@app/store/selectors/cart.selector';
-import {GetCart} from '@app/store/actions/cart.actions';
+import { AuthenticationService, I18nService, Logger } from '@app/core';
+import { ConfigService } from '@app/core/config.service';
+import { IConfig } from '@models/Config';
+import { Subscription } from 'rxjs';
+import { CartItem } from '@models/Cart';
+import { CartService } from '@app/shop/services/cart.service';
+
+const log = new Logger('Header Component');
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  config: IConfig = null;
+  cart: CartItem[] = null;
+  private subscription = new Subscription();
   menuHidden = true;
-  config$ = this._store.pipe(select(selectConfig));
-  cart$ = this._store.pipe(select(selectCartList));
 
   constructor(
-    private _store: Store<IAppState>,
+    private cartService: CartService,
+    private configService: ConfigService,
     private router: Router,
     private authenticationService: AuthenticationService,
     private i18nService: I18nService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this._store.dispatch(new GetConfig());
-    this._store.dispatch(new GetCart());
+    this.subscription.add(
+      this.configService.ConfigReady.subscribe(config => {
+        this.config = config;
+      })
+    );
+
+    this.subscription.add(
+      this.cartService.$Cart().subscribe(cart => {
+        this.cart = cart;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    log.info('HeaderComponent ngOnDestroy');
+    this.subscription.unsubscribe();
   }
 
   toggleMenu() {
@@ -42,7 +57,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], {replaceUrl: true}));
+    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   get currentLanguage(): string {
