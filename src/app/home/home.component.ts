@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 
-import { QuoteService } from './quote.service';
+import { IProduct, Product } from '@models/Product';
+import { ShopService } from '@app/shop/services/shop.service';
 
 @Component({
   selector: 'app-home',
@@ -9,22 +10,23 @@ import { QuoteService } from './quote.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  quote: string;
   isLoading: boolean;
+  @Input() products: IProduct[];
+  @Output() addToCart = new EventEmitter<IProduct>();
 
-  constructor(private quoteService: QuoteService) {}
+  constructor(private shopService: ShopService) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.quoteService
-      .getRandomQuote({ category: 'dev' })
+    this.shopService
+      .getProducts()
       .pipe(
         finalize(() => {
           this.isLoading = false;
         })
       )
-      .subscribe((quote: string) => {
-        this.quote = quote;
+      .subscribe((products: Product[]) => {
+        this.products = products;
       });
   }
 }

@@ -2,9 +2,10 @@
 import env from './.env';
 
 export const environment = {
+  name: 'Production Environment',
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'https://api.chucknorris.io',
+  serverUrl: 'http://api.serpek.com/',
   defaultLanguage: 'tr-TR',
   supportedLanguages: ['en-US', 'tr-TR']
 };

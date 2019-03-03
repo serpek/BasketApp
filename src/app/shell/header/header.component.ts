@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService, I18nService } from '@app/core';
+import { select, Store } from '@ngrx/store';
+import { selectConfig } from '@app/store/selectors/config.selector';
+import { IAppState } from '@app/store/state/app.state';
+import { GetConfig } from '@app/store/actions/config.actions';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +14,18 @@ import { AuthenticationService, I18nService } from '@app/core';
 })
 export class HeaderComponent implements OnInit {
   menuHidden = true;
+  config$ = this._store.pipe(select(selectConfig));
 
   constructor(
+    private _store: Store<IAppState>,
     private router: Router,
     private authenticationService: AuthenticationService,
     private i18nService: I18nService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._store.dispatch(new GetConfig());
+  }
 
   toggleMenu() {
     this.menuHidden = !this.menuHidden;

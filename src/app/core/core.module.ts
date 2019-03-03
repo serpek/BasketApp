@@ -12,12 +12,14 @@ import { HttpCacheService } from './http/http-cache.service';
 import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
+import { ConfigService } from '@app/core/config.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule],
   providers: [
     AuthenticationService,
     AuthenticationGuard,
+    ConfigService,
     I18nService,
     HttpCacheService,
     ApiPrefixInterceptor,

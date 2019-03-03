@@ -1,0 +1,3 @@
+<app-loader [isLoading]="isLoading"></app-loader>
+
+<app-list [hidden]="isLoading" [products]="products$ | async"></app-list>

@@ -6,6 +6,7 @@
 import env from './.env';
 
 export const environment = {
+  name: 'Development Environment',
   production: false,
   version: env.npm_package_version + '-dev',
   serverUrl: '/api',

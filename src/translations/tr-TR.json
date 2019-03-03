@@ -1,16 +1,16 @@
 {
   "APP_NAME": "Sepet Uygulaması",
-  "About": "Hakkımızda",
+  "Shop": "Mağaza",
   "Hello world !": "Merhaba Dünya!",
   "Home": "Ana Sayfa",
-  "Logged in as": "Connecté en tant que",
+  "Logged in as": "Hoşgeldin, ",
   "Login": "Giriş Yap",
   "Logout": "Çıkış Yap",
   "Password": "Şifre",
-  "Password is required": "Mot de passe requis",
+  "Password is required": "Şifrenizi girmeniz gerekiyor",
   "Username": "Kullanıcı Adı",
-  "Username is required": "Identifiant requis",
-  "Username or password incorrect.": "Identifiant ou mot de passe incorrect.",
+  "Username is required": "Kullanıcı adınızı girmeniz gerekiyor",
+  "Username or password incorrect.": "Kullanıcı adı veya şifreniz hatalı!",
   "Remember me": "Beni Hatırla",
-  "Version": "Version"
+  "Version": "Versiyon"
 }
