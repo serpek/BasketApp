@@ -53,7 +53,7 @@
     "@angular/cli": "~7.3.4",
     "@angular/compiler-cli": "^7.2.7",
     "@angular/language-service": "^7.2.7",
-    "@biesbjerg/ngx-translate-extract": "^2.3.4",
+    "@biesbjerg/ngx-translate-extract": "^7.0.4",
     "@fortawesome/angular-fontawesome": "^0.3.0",
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
